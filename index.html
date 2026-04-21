@@ -33,23 +33,14 @@
         .grid-container {
             overflow: visible;
         }
-        
-        /* 标志颜色：金色 → 网站蓝色 (#0ea5e9) */
-        .logo-img {
-            height: 44px;
-            width: auto;
-            filter: brightness(0.8) contrast(1.2) sepia(1) hue-rotate(165deg) saturate(8);
-        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- 导航栏：左上角放你的标志图片 -->
+    <!-- 导航栏：左上角为公司名称文字 -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- 这里用你的图片替换了原来的公司名字 -->
-            <img src="麦云标志.jpg" alt="麦云文化传播" class="logo-img">
-            
+            <div class="text-2xl font-bold text-sky-600">麦云文化传播</div>
             <div class="hidden md:flex space-x-8 text-lg">
                 <a href="#about" class="hover:text-sky-600 transition">关于我们</a>
                 <a href="#services" class="hover:text-sky-600 transition">主营业务</a>
@@ -134,11 +125,12 @@
         </div>
     </section>
 
-    <!-- 案例展示 -->
+    <!-- 案例展示 - 每个主营业务 6 个静态图片，悬停放大 -->
     <section id="projects" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">案例展示</h2>
             
+            <!-- 企业展厅案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-building mr-3 text-sky-600"></i>企业展厅案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 grid-container">
@@ -151,6 +143,7 @@
                 </div>
             </div>
             
+            <!-- 展台搭建案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-store mr-3 text-sky-600"></i>展台搭建案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -163,6 +156,7 @@
                 </div>
             </div>
             
+            <!-- 精工模型案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-cube mr-3 text-sky-600"></i>精工模型案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -175,6 +169,7 @@
                 </div>
             </div>
             
+            <!-- 展墙设计案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-paintbrush mr-3 text-sky-600"></i>展墙设计案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -187,6 +182,7 @@
                 </div>
             </div>
             
+            <!-- 平面设计案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-palette mr-3 text-sky-600"></i>平面设计案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
