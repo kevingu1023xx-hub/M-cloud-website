@@ -10,15 +10,33 @@
     <style>
         body { font-family: system-ui, -apple-system, "Noto Sans SC", sans-serif; }
         .hero-bg { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat; }
+        .case-card img {
+            transition: transform 0.3s ease;
+        }
+        .case-card:hover img {
+            transform: scale(1.05);
+        }
+        .tab-active {
+            background-color: #0ea5e9;
+            color: white;
+            border-color: #0ea5e9;
+        }
+        .tab-inactive {
+            background-color: white;
+            color: #0ea5e9;
+            border-color: #e2e8f0;
+        }
+        .tab-inactive:hover {
+            background-color: #f0f9ff;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- 导航栏 -->
+    <!-- 导航栏 (不变) -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-sky-600">麦云文化传播</div>
-            
             <div class="hidden md:flex space-x-8 text-lg">
                 <a href="#about" class="hover:text-sky-600 transition">关于我们</a>
                 <a href="#services" class="hover:text-sky-600 transition">主营业务</a>
@@ -26,14 +44,10 @@
                 <a href="#clients" class="hover:text-sky-600 transition">合作客户</a>
                 <a href="#contact" class="hover:text-sky-600 transition">联系我们</a>
             </div>
-            
-            <!-- 手机菜单按钮 -->
             <button onclick="toggleMenu()" class="md:hidden text-3xl">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
-        
-        <!-- 手机菜单 -->
         <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-6 py-4">
             <a href="#about" class="block py-3 text-lg" onclick="closeMenu()">关于我们</a>
             <a href="#services" class="block py-3 text-lg" onclick="closeMenu()">主营业务</a>
@@ -78,31 +92,26 @@
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">主营业务</h2>
             <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-8">
-                <!-- 企业展厅 -->
                 <div class="bg-white rounded-3xl shadow hover:shadow-xl p-8 transition">
                     <i class="fa-solid fa-building text-5xl text-sky-600 mb-6"></i>
                     <h3 class="text-2xl font-semibold mb-3">企业展厅</h3>
                     <p class="text-slate-600">全案设计与制作，沉浸式品牌展示空间</p>
                 </div>
-                <!-- 展台搭建 -->
                 <div class="bg-white rounded-3xl shadow hover:shadow-xl p-8 transition">
                     <i class="fa-solid fa-store text-5xl text-sky-600 mb-6"></i>
                     <h3 class="text-2xl font-semibold mb-3">展台搭建</h3>
                     <p class="text-slate-600">展会展台、临时展台，快速搭建交付</p>
                 </div>
-                <!-- 精工模型 -->
                 <div class="bg-white rounded-3xl shadow hover:shadow-xl p-8 transition">
                     <i class="fa-solid fa-cube text-5xl text-sky-600 mb-6"></i>
                     <h3 class="text-2xl font-semibold mb-3">精工模型</h3>
                     <p class="text-slate-600">1:1高精度产品模型、沙盘模型</p>
                 </div>
-                <!-- 展墙设计（图标修复为fa-paintbrush） -->
                 <div class="bg-white rounded-3xl shadow hover:shadow-xl p-8 transition">
                     <i class="fa-solid fa-paintbrush text-5xl text-sky-600 mb-6"></i>
                     <h3 class="text-2xl font-semibold mb-3">展墙设计</h3>
                     <p class="text-slate-600">大型展墙、互动多媒体展墙</p>
                 </div>
-                <!-- 平面设计（原文创产品） -->
                 <div class="bg-white rounded-3xl shadow hover:shadow-xl p-8 transition">
                     <i class="fa-solid fa-palette text-5xl text-sky-600 mb-6"></i>
                     <h3 class="text-2xl font-semibold mb-3">平面设计</h3>
@@ -112,59 +121,29 @@
         </div>
     </section>
 
-    <!-- 案例展示（按主营业务分区） -->
+    <!-- 案例展示（选项卡 + 紧凑网格） -->
     <section id="projects" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">案例展示</h2>
             
-            <!-- 企业展厅案例 -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-building mr-3 text-sky-600"></i>企业展厅案例</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <img src="https://picsum.photos/id/1015/600/400" alt="企业展厅案例1" class="rounded-2xl shadow hover:scale-105 transition">
-                    <img src="https://picsum.photos/id/1005/600/400" alt="企业展厅案例2" class="rounded-2xl shadow hover:scale-105 transition">
-                </div>
+            <!-- 选项卡按钮 -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button data-category="all" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-active">全部</button>
+                <button data-category="hall" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">企业展厅</button>
+                <button data-category="booth" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">展台搭建</button>
+                <button data-category="model" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">精工模型</button>
+                <button data-category="wall" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">展墙设计</button>
+                <button data-category="graphic" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">平面设计</button>
             </div>
 
-            <!-- 展台搭建案例 -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-store mr-3 text-sky-600"></i>展台搭建案例</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <img src="https://picsum.photos/id/133/600/400" alt="展台搭建案例1" class="rounded-2xl shadow hover:scale-105 transition">
-                    <img src="https://picsum.photos/id/102/600/400" alt="展台搭建案例2" class="rounded-2xl shadow hover:scale-105 transition">
-                </div>
-            </div>
-
-            <!-- 精工模型案例 -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-cube mr-3 text-sky-600"></i>精工模型案例</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <img src="https://picsum.photos/id/201/600/400" alt="精工模型案例1" class="rounded-2xl shadow hover:scale-105 transition">
-                    <img src="https://picsum.photos/id/202/600/400" alt="精工模型案例2" class="rounded-2xl shadow hover:scale-105 transition">
-                </div>
-            </div>
-
-            <!-- 展墙设计案例 -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-paintbrush mr-3 text-sky-600"></i>展墙设计案例</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <img src="https://picsum.photos/id/251/600/400" alt="展墙设计案例1" class="rounded-2xl shadow hover:scale-105 transition">
-                    <img src="https://picsum.photos/id/252/600/400" alt="展墙设计案例2" class="rounded-2xl shadow hover:scale-105 transition">
-                </div>
-            </div>
-
-            <!-- 平面设计案例 -->
-            <div>
-                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-palette mr-3 text-sky-600"></i>平面设计案例</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <img src="https://picsum.photos/id/29/600/400" alt="平面设计案例1" class="rounded-2xl shadow hover:scale-105 transition">
-                    <img src="https://picsum.photos/id/30/600/400" alt="平面设计案例2" class="rounded-2xl shadow hover:scale-105 transition">
-                </div>
+            <!-- 案例网格 (一排4个) -->
+            <div id="casesGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- 动态填充 JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- 客户标识墙 -->
+    <!-- 合作客户 -->
     <section id="clients" class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">合作客户</h2>
@@ -189,15 +168,11 @@
                     <div class="space-y-8">
                         <div class="flex items-center text-xl">
                             <i class="fa-solid fa-phone mr-6 text-3xl text-sky-600"></i>
-                            <div>
-                                <span class="font-medium">电话：</span> 13817713929
-                            </div>
+                            <div><span class="font-medium">电话：</span> 13817713929</div>
                         </div>
                         <div class="flex items-center text-xl">
                             <i class="fa-solid fa-envelope mr-6 text-3xl text-sky-600"></i>
-                            <div>
-                                <span class="font-medium">邮箱：</span> brown.gu@cul-cloud.com
-                            </div>
+                            <div><span class="font-medium">邮箱：</span> brown.gu@cul-cloud.com</div>
                         </div>
                         <div class="flex items-center text-xl">
                             <i class="fa-brands fa-weixin mr-6 text-3xl text-sky-600"></i>
@@ -208,22 +183,18 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="bg-slate-50 p-10 rounded-3xl flex flex-col justify-center">
                     <div class="text-center">
                         <i class="fa-solid fa-message text-5xl text-sky-600 mb-6"></i>
                         <p class="text-xl font-medium mb-4">专业团队，一站式服务</p>
                         <p class="text-slate-600">展厅设计 · 展台制作 · 精工模型 · 平面设计</p>
-                        <div class="mt-8 text-sky-600">
-                            <i class="fa-regular fa-clock"></i> 7x24小时在线咨询
-                        </div>
+                        <div class="mt-8 text-sky-600"><i class="fa-regular fa-clock"></i> 7x24小时在线咨询</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 页脚 -->
     <footer class="bg-slate-900 text-white py-12">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <p>© 2026 麦云文化传播 版权所有</p>
@@ -232,13 +203,92 @@
     </footer>
 
     <script>
+        // 案例数据 (共12个，覆盖5个业务)
+        const casesData = [
+            { category: "hall", img: "https://picsum.photos/id/1015/600/400", title: "科技企业展厅", desc: "沉浸式互动体验" },
+            { category: "hall", img: "https://picsum.photos/id/1005/600/400", title: "汽车品牌展厅", desc: "空间与光线的完美结合" },
+            { category: "hall", img: "https://picsum.photos/id/104/600/400", title: "文化博物馆展厅", desc: "历史与现代交融" },
+            { category: "booth", img: "https://picsum.photos/id/133/600/400", title: "消费电子展台", desc: "科技感十足" },
+            { category: "booth", img: "https://picsum.photos/id/102/600/400", title: "医药展台", desc: "专业简洁" },
+            { category: "booth", img: "https://picsum.photos/id/108/600/400", title: "家居展台", desc: "温馨舒适" },
+            { category: "model", img: "https://picsum.photos/id/201/600/400", title: "建筑沙盘模型", desc: "1:200精准还原" },
+            { category: "model", img: "https://picsum.photos/id/202/600/400", title: "产品功能模型", desc: "可互动演示" },
+            { category: "wall", img: "https://picsum.photos/id/251/600/400", title: "企业文化展墙", desc: "多媒体融合" },
+            { category: "wall", img: "https://picsum.photos/id/252/600/400", title: "品牌历史展墙", desc: "时间轴设计" },
+            { category: "graphic", img: "https://picsum.photos/id/29/600/400", title: "品牌VI系统", desc: "统一视觉识别" },
+            { category: "graphic", img: "https://picsum.photos/id/30/600/400", title: "产品画册设计", desc: "高端印刷工艺" }
+        ];
+
+        // 获取网格容器
+        const gridContainer = document.getElementById('casesGrid');
+        // 获取所有选项卡按钮
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        
+        // 渲染案例
+        function renderCases(category) {
+            let filtered = [];
+            if (category === 'all') {
+                filtered = casesData;
+            } else {
+                filtered = casesData.filter(item => item.category === category);
+            }
+            
+            // 生成 HTML
+            let html = '';
+            filtered.forEach(item => {
+                html += `
+                    <div class="case-card bg-white rounded-xl shadow-md overflow-hidden transition hover:shadow-lg">
+                        <div class="overflow-hidden">
+                            <img src="${item.img}" alt="${item.title}" class="w-full h-48 object-cover transition">
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-1">${item.title}</h4>
+                            <p class="text-slate-500 text-sm">${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // 如果过滤后没有案例，显示提示
+            if (filtered.length === 0) {
+                html = '<div class="col-span-full text-center py-12 text-slate-400">暂无该类别案例，敬请期待</div>';
+            }
+            gridContainer.innerHTML = html;
+        }
+        
+        // 切换选项卡样式
+        function setActiveTab(activeBtn) {
+            tabBtns.forEach(btn => {
+                if (btn === activeBtn) {
+                    btn.classList.remove('tab-inactive');
+                    btn.classList.add('tab-active');
+                } else {
+                    btn.classList.remove('tab-active');
+                    btn.classList.add('tab-inactive');
+                }
+            });
+        }
+        
+        // 绑定选项卡事件
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                setActiveTab(this);
+                renderCases(category);
+            });
+        });
+        
+        // 默认显示全部
+        renderCases('all');
+        
+        // 手机菜单函数
         function toggleMenu() {
-            const menu = document.getElementById('mobileMenu')
-            menu.classList.toggle('hidden')
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
         }
         function closeMenu() {
-            const menu = document.getElementById('mobileMenu')
-            menu.classList.add('hidden')
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.add('hidden');
         }
     </script>
 </body>
