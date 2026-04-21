@@ -10,30 +10,74 @@
     <style>
         body { font-family: system-ui, -apple-system, "Noto Sans SC", sans-serif; }
         .hero-bg { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat; }
-        .case-card img {
-            transition: transform 0.3s ease;
+        
+        /* 横向滚动容器样式 */
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 1.5rem;
+            padding-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
         }
-        .case-card:hover img {
-            transform: scale(1.05);
+        .scroll-container::-webkit-scrollbar {
+            height: 8px;
         }
-        .tab-active {
-            background-color: #0ea5e9;
-            color: white;
-            border-color: #0ea5e9;
+        .scroll-container::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 4px;
         }
-        .tab-inactive {
-            background-color: white;
-            color: #0ea5e9;
-            border-color: #e2e8f0;
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #0ea5e9;
+            border-radius: 4px;
         }
-        .tab-inactive:hover {
-            background-color: #f0f9ff;
+        
+        /* 案例卡片 */
+        .case-card {
+            flex: 0 0 280px;  /* 固定宽度，便于横向滚动 */
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+            position: relative;
+        }
+        .case-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            z-index: 10;
+        }
+        .case-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 1rem 1rem 0 0;
+            transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transform-origin: center center;
+        }
+        .case-card:hover .case-img {
+            transform: scale(2.5);
+            border-radius: 0.5rem;
+        }
+        /* 为了保证放大的图片不被裁切，需要让卡片溢出可见 */
+        .case-card {
+            overflow: visible;
+        }
+        .card-content {
+            padding: 1rem;
+            background: white;
+            border-radius: 0 0 1rem 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        /* 修复图片放大后可能超出父级边界的问题 */
+        .case-img-container {
+            overflow: visible;
+            position: relative;
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- 导航栏 (不变) -->
+    <!-- 导航栏 -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-sky-600">麦云文化传播</div>
@@ -121,24 +165,39 @@
         </div>
     </section>
 
-    <!-- 案例展示（选项卡 + 紧凑网格） -->
+    <!-- 案例展示（每个主营业务独立横向滚动，各12个案例） -->
     <section id="projects" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">案例展示</h2>
             
-            <!-- 选项卡按钮 -->
-            <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button data-category="all" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-active">全部</button>
-                <button data-category="hall" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">企业展厅</button>
-                <button data-category="booth" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">展台搭建</button>
-                <button data-category="model" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">精工模型</button>
-                <button data-category="wall" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">展墙设计</button>
-                <button data-category="graphic" class="tab-btn px-6 py-2 rounded-full border font-medium transition tab-inactive">平面设计</button>
+            <!-- 企业展厅 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-building mr-3 text-sky-600"></i>企业展厅案例</h3>
+                <div class="scroll-container" id="scroll-hall"></div>
             </div>
-
-            <!-- 案例网格 (一排4个) -->
-            <div id="casesGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                <!-- 动态填充 JavaScript -->
+            
+            <!-- 展台搭建 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-store mr-3 text-sky-600"></i>展台搭建案例</h3>
+                <div class="scroll-container" id="scroll-booth"></div>
+            </div>
+            
+            <!-- 精工模型 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-cube mr-3 text-sky-600"></i>精工模型案例</h3>
+                <div class="scroll-container" id="scroll-model"></div>
+            </div>
+            
+            <!-- 展墙设计 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-paintbrush mr-3 text-sky-600"></i>展墙设计案例</h3>
+                <div class="scroll-container" id="scroll-wall"></div>
+            </div>
+            
+            <!-- 平面设计 -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-palette mr-3 text-sky-600"></i>平面设计案例</h3>
+                <div class="scroll-container" id="scroll-graphic"></div>
             </div>
         </div>
     </section>
@@ -203,83 +262,54 @@
     </footer>
 
     <script>
-        // 案例数据 (共12个，覆盖5个业务)
-        const casesData = [
-            { category: "hall", img: "https://picsum.photos/id/1015/600/400", title: "科技企业展厅", desc: "沉浸式互动体验" },
-            { category: "hall", img: "https://picsum.photos/id/1005/600/400", title: "汽车品牌展厅", desc: "空间与光线的完美结合" },
-            { category: "hall", img: "https://picsum.photos/id/104/600/400", title: "文化博物馆展厅", desc: "历史与现代交融" },
-            { category: "booth", img: "https://picsum.photos/id/133/600/400", title: "消费电子展台", desc: "科技感十足" },
-            { category: "booth", img: "https://picsum.photos/id/102/600/400", title: "医药展台", desc: "专业简洁" },
-            { category: "booth", img: "https://picsum.photos/id/108/600/400", title: "家居展台", desc: "温馨舒适" },
-            { category: "model", img: "https://picsum.photos/id/201/600/400", title: "建筑沙盘模型", desc: "1:200精准还原" },
-            { category: "model", img: "https://picsum.photos/id/202/600/400", title: "产品功能模型", desc: "可互动演示" },
-            { category: "wall", img: "https://picsum.photos/id/251/600/400", title: "企业文化展墙", desc: "多媒体融合" },
-            { category: "wall", img: "https://picsum.photos/id/252/600/400", title: "品牌历史展墙", desc: "时间轴设计" },
-            { category: "graphic", img: "https://picsum.photos/id/29/600/400", title: "品牌VI系统", desc: "统一视觉识别" },
-            { category: "graphic", img: "https://picsum.photos/id/30/600/400", title: "产品画册设计", desc: "高端印刷工艺" }
-        ];
-
-        // 获取网格容器
-        const gridContainer = document.getElementById('casesGrid');
-        // 获取所有选项卡按钮
-        const tabBtns = document.querySelectorAll('.tab-btn');
-        
-        // 渲染案例
-        function renderCases(category) {
-            let filtered = [];
-            if (category === 'all') {
-                filtered = casesData;
-            } else {
-                filtered = casesData.filter(item => item.category === category);
+        // 生成模拟案例图片（每个业务12个，图片使用 picsum 固定ID范围，保证不同）
+        function generateCases(count, baseId) {
+            const cases = [];
+            for (let i = 1; i <= count; i++) {
+                // 使用不同的图片ID，使每个案例图片不同
+                const imgId = baseId + i * 7 % 300;
+                cases.push({
+                    img: `https://picsum.photos/id/${imgId}/400/300`,
+                    title: `案例 ${i}`,
+                    desc: `精彩案例展示 ${i}`
+                });
             }
-            
-            // 生成 HTML
+            return cases;
+        }
+        
+        // 渲染横向滚动列表
+        function renderScrollContainer(containerId, casesArray) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
             let html = '';
-            filtered.forEach(item => {
+            casesArray.forEach(item => {
                 html += `
-                    <div class="case-card bg-white rounded-xl shadow-md overflow-hidden transition hover:shadow-lg">
-                        <div class="overflow-hidden">
-                            <img src="${item.img}" alt="${item.title}" class="w-full h-48 object-cover transition">
+                    <div class="case-card">
+                        <div class="case-img-container">
+                            <img src="${item.img}" alt="${item.title}" class="case-img">
                         </div>
-                        <div class="p-4">
+                        <div class="card-content">
                             <h4 class="font-bold text-lg mb-1">${item.title}</h4>
                             <p class="text-slate-500 text-sm">${item.desc}</p>
                         </div>
                     </div>
                 `;
             });
-            
-            // 如果过滤后没有案例，显示提示
-            if (filtered.length === 0) {
-                html = '<div class="col-span-full text-center py-12 text-slate-400">暂无该类别案例，敬请期待</div>';
-            }
-            gridContainer.innerHTML = html;
+            container.innerHTML = html;
         }
         
-        // 切换选项卡样式
-        function setActiveTab(activeBtn) {
-            tabBtns.forEach(btn => {
-                if (btn === activeBtn) {
-                    btn.classList.remove('tab-inactive');
-                    btn.classList.add('tab-active');
-                } else {
-                    btn.classList.remove('tab-active');
-                    btn.classList.add('tab-inactive');
-                }
-            });
-        }
+        // 为每个业务生成12个案例（不同图片）
+        const hallCases = generateCases(12, 101);
+        const boothCases = generateCases(12, 201);
+        const modelCases = generateCases(12, 301);
+        const wallCases = generateCases(12, 401);
+        const graphicCases = generateCases(12, 501);
         
-        // 绑定选项卡事件
-        tabBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const category = this.getAttribute('data-category');
-                setActiveTab(this);
-                renderCases(category);
-            });
-        });
-        
-        // 默认显示全部
-        renderCases('all');
+        renderScrollContainer('scroll-hall', hallCases);
+        renderScrollContainer('scroll-booth', boothCases);
+        renderScrollContainer('scroll-model', modelCases);
+        renderScrollContainer('scroll-wall', wallCases);
+        renderScrollContainer('scroll-graphic', graphicCases);
         
         // 手机菜单函数
         function toggleMenu() {
