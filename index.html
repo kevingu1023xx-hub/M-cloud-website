@@ -11,73 +11,78 @@
         body { font-family: system-ui, -apple-system, "Noto Sans SC", sans-serif; }
         .hero-bg { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat; }
         
-        /* 横向滚动容器样式 */
+        /* 横向滚动容器 - 隐藏滚动条 */
         .scroll-container {
-            display: flex;
             overflow-x: auto;
             scroll-behavior: smooth;
-            gap: 1.5rem;
-            padding-bottom: 1rem;
+            white-space: nowrap;
+            cursor: grab;
             -webkit-overflow-scrolling: touch;
-        }
-        .scroll-container::-webkit-scrollbar {
-            height: 8px;
-        }
-        .scroll-container::-webkit-scrollbar-track {
-            background: #e2e8f0;
-            border-radius: 4px;
-        }
-        .scroll-container::-webkit-scrollbar-thumb {
-            background: #0ea5e9;
-            border-radius: 4px;
-        }
-        
-        /* 案例卡片 */
-        .case-card {
-            flex: 0 0 280px;  /* 固定宽度，便于横向滚动 */
-            background: white;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            transition: box-shadow 0.3s ease;
+            scrollbar-width: none; /* Firefox */
             position: relative;
         }
-        .case-card:hover {
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-            z-index: 10;
+        .scroll-container::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+        
+        /* 内层列表 */
+        .scroll-list {
+            display: inline-flex;
+            gap: 1.5rem;
+            padding: 0.5rem 0;
+        }
+        
+        /* 案例卡片 - 无文字内容，只有图片 */
+        .case-card {
+            flex-shrink: 0;
+            width: 280px;
+            border-radius: 1rem;
+            overflow: visible;
+            position: relative;
+            transition: transform 0.2s;
         }
         .case-img {
             width: 100%;
             height: 180px;
             object-fit: cover;
-            border-radius: 1rem 1rem 0 0;
+            border-radius: 1rem;
             transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            transform-origin: center center;
+            display: block;
         }
         .case-card:hover .case-img {
             transform: scale(2.5);
-            border-radius: 0.5rem;
+            z-index: 100;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
         }
-        /* 为了保证放大的图片不被裁切，需要让卡片溢出可见 */
+        
+        /* 保证悬停时图片不被裁切，且覆盖其他内容 */
         .case-card {
             overflow: visible;
         }
-        .card-content {
-            padding: 1rem;
-            background: white;
-            border-radius: 0 0 1rem 1rem;
-            position: relative;
-            z-index: 2;
+        
+        /* 业务标题样式 */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        /* 修复图片放大后可能超出父级边界的问题 */
-        .case-img-container {
-            overflow: visible;
+        .section-title i {
+            color: #0ea5e9;
+        }
+        
+        /* 可选：添加左右渐变提示（非必须） */
+        .scroll-wrapper {
             position: relative;
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- 导航栏 -->
+    <!-- 导航栏 (不变) -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-sky-600">麦云文化传播</div>
@@ -165,39 +170,49 @@
         </div>
     </section>
 
-    <!-- 案例展示（每个主营业务独立横向滚动，各12个案例） -->
+    <!-- 案例展示 - 自动横向滚动，无文字，无滚动条 -->
     <section id="projects" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">案例展示</h2>
             
             <!-- 企业展厅 -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-building mr-3 text-sky-600"></i>企业展厅案例</h3>
-                <div class="scroll-container" id="scroll-hall"></div>
+            <div class="mb-16 scroll-wrapper" data-scroll="hall">
+                <div class="section-title"><i class="fa-solid fa-building"></i> 企业展厅案例</div>
+                <div class="scroll-container" id="scroll-hall">
+                    <div class="scroll-list" id="list-hall"></div>
+                </div>
             </div>
             
             <!-- 展台搭建 -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-store mr-3 text-sky-600"></i>展台搭建案例</h3>
-                <div class="scroll-container" id="scroll-booth"></div>
+            <div class="mb-16 scroll-wrapper" data-scroll="booth">
+                <div class="section-title"><i class="fa-solid fa-store"></i> 展台搭建案例</div>
+                <div class="scroll-container" id="scroll-booth">
+                    <div class="scroll-list" id="list-booth"></div>
+                </div>
             </div>
             
             <!-- 精工模型 -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-cube mr-3 text-sky-600"></i>精工模型案例</h3>
-                <div class="scroll-container" id="scroll-model"></div>
+            <div class="mb-16 scroll-wrapper" data-scroll="model">
+                <div class="section-title"><i class="fa-solid fa-cube"></i> 精工模型案例</div>
+                <div class="scroll-container" id="scroll-model">
+                    <div class="scroll-list" id="list-model"></div>
+                </div>
             </div>
             
             <!-- 展墙设计 -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-paintbrush mr-3 text-sky-600"></i>展墙设计案例</h3>
-                <div class="scroll-container" id="scroll-wall"></div>
+            <div class="mb-16 scroll-wrapper" data-scroll="wall">
+                <div class="section-title"><i class="fa-solid fa-paintbrush"></i> 展墙设计案例</div>
+                <div class="scroll-container" id="scroll-wall">
+                    <div class="scroll-list" id="list-wall"></div>
+                </div>
             </div>
             
             <!-- 平面设计 -->
-            <div class="mb-16">
-                <h3 class="text-2xl font-semibold mb-4 flex items-center"><i class="fa-solid fa-palette mr-3 text-sky-600"></i>平面设计案例</h3>
-                <div class="scroll-container" id="scroll-graphic"></div>
+            <div class="mb-16 scroll-wrapper" data-scroll="graphic">
+                <div class="section-title"><i class="fa-solid fa-palette"></i> 平面设计案例</div>
+                <div class="scroll-container" id="scroll-graphic">
+                    <div class="scroll-list" id="list-graphic"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -262,54 +277,108 @@
     </footer>
 
     <script>
-        // 生成模拟案例图片（每个业务12个，图片使用 picsum 固定ID范围，保证不同）
-        function generateCases(count, baseId) {
-            const cases = [];
+        // 生成12张不同图片（无文字）
+        function generateImageUrls(count, startId) {
+            const urls = [];
             for (let i = 1; i <= count; i++) {
-                // 使用不同的图片ID，使每个案例图片不同
-                const imgId = baseId + i * 7 % 300;
-                cases.push({
-                    img: `https://picsum.photos/id/${imgId}/400/300`,
-                    title: `案例 ${i}`,
-                    desc: `精彩案例展示 ${i}`
-                });
+                // 使用不同的图片ID，确保多样性
+                const id = (startId + i * 13) % 300 + 1;
+                urls.push(`https://picsum.photos/id/${id}/400/300`);
             }
-            return cases;
+            return urls;
         }
         
-        // 渲染横向滚动列表
-        function renderScrollContainer(containerId, casesArray) {
+        // 渲染一个滚动列表（仅图片，无文字）
+        function renderList(containerId, imageUrls) {
             const container = document.getElementById(containerId);
             if (!container) return;
             let html = '';
-            casesArray.forEach(item => {
+            imageUrls.forEach(url => {
                 html += `
                     <div class="case-card">
-                        <div class="case-img-container">
-                            <img src="${item.img}" alt="${item.title}" class="case-img">
-                        </div>
-                        <div class="card-content">
-                            <h4 class="font-bold text-lg mb-1">${item.title}</h4>
-                            <p class="text-slate-500 text-sm">${item.desc}</p>
-                        </div>
+                        <img src="${url}" alt="案例图片" class="case-img">
                     </div>
                 `;
             });
             container.innerHTML = html;
         }
         
-        // 为每个业务生成12个案例（不同图片）
-        const hallCases = generateCases(12, 101);
-        const boothCases = generateCases(12, 201);
-        const modelCases = generateCases(12, 301);
-        const wallCases = generateCases(12, 401);
-        const graphicCases = generateCases(12, 501);
+        // 初始化自动滚动 (无缝无限滚动)
+        function initAutoScroll(wrapperSelector) {
+            const wrappers = document.querySelectorAll(wrapperSelector);
+            wrappers.forEach(wrapper => {
+                const scrollContainer = wrapper.querySelector('.scroll-container');
+                const scrollList = wrapper.querySelector('.scroll-list');
+                if (!scrollContainer || !scrollList) return;
+                
+                // 复制一份列表内容以实现无缝循环
+                const originalItems = Array.from(scrollList.children);
+                if (originalItems.length === 0) return;
+                originalItems.forEach(item => {
+                    const clone = item.cloneNode(true);
+                    scrollList.appendChild(clone);
+                });
+                
+                let scrollSpeed = 1; // 像素每帧
+                let scrollInterval = null;
+                let isHovering = false;
+                
+                const step = () => {
+                    if (isHovering) return;
+                    if (scrollContainer.scrollLeft >= scrollList.scrollWidth / 2) {
+                        // 当滚动超过原始宽度一半时，瞬间重置到0，实现无缝
+                        scrollContainer.scrollLeft = 0;
+                    } else {
+                        scrollContainer.scrollLeft += scrollSpeed;
+                    }
+                };
+                
+                const startScroll = () => {
+                    if (scrollInterval) clearInterval(scrollInterval);
+                    scrollInterval = setInterval(step, 16); // 约60fps
+                };
+                
+                const stopScroll = () => {
+                    if (scrollInterval) {
+                        clearInterval(scrollInterval);
+                        scrollInterval = null;
+                    }
+                };
+                
+                // 鼠标悬停暂停
+                scrollContainer.addEventListener('mouseenter', () => {
+                    isHovering = true;
+                    stopScroll();
+                });
+                scrollContainer.addEventListener('mouseleave', () => {
+                    isHovering = false;
+                    startScroll();
+                });
+                
+                startScroll();
+                
+                // 可选：如果用户手动滚动，暂时停止自动？保留自动，但简单起见不做额外处理
+                // 为了更好的体验，当用户手动滚动时，暂时停止几秒？更复杂，暂时不做
+            });
+        }
         
-        renderScrollContainer('scroll-hall', hallCases);
-        renderScrollContainer('scroll-booth', boothCases);
-        renderScrollContainer('scroll-model', modelCases);
-        renderScrollContainer('scroll-wall', wallCases);
-        renderScrollContainer('scroll-graphic', graphicCases);
+        // 生成5组各12张图片
+        const hallImages = generateImageUrls(12, 10);
+        const boothImages = generateImageUrls(12, 100);
+        const modelImages = generateImageUrls(12, 200);
+        const wallImages = generateImageUrls(12, 300);
+        const graphicImages = generateImageUrls(12, 400);
+        
+        renderList('list-hall', hallImages);
+        renderList('list-booth', boothImages);
+        renderList('list-model', modelImages);
+        renderList('list-wall', wallImages);
+        renderList('list-graphic', graphicImages);
+        
+        // 等待DOM渲染完成后再初始化自动滚动
+        setTimeout(() => {
+            initAutoScroll('.scroll-wrapper');
+        }, 100);
         
         // 手机菜单函数
         function toggleMenu() {
