@@ -73,16 +73,11 @@
         .section-title i {
             color: #0ea5e9;
         }
-        
-        /* 可选：添加左右渐变提示（非必须） */
-        .scroll-wrapper {
-            position: relative;
-        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- 导航栏 (不变) -->
+    <!-- 导航栏 -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-sky-600">麦云文化传播</div>
@@ -123,7 +118,7 @@
                 <div>
                     <p class="text-xl leading-relaxed text-slate-600">
                         麦云文化传播专注于企业展厅、展台、精工模型、展墙及平面设计的创意与制作。<br><br>
-                        十年行业经验，服务过多家知名品牌，为您提供从方案设计到落地制作的一站式服务。
+                        <span class="font-semibold text-sky-600">二十年行业经验</span>，服务过多家知名品牌，为您提供从方案设计到落地制作的一站式服务。
                     </p>
                     <div class="mt-10 grid grid-cols-3 gap-4 text-center">
                         <div><span class="block text-4xl font-bold text-sky-600">200+</span><span class="text-slate-500">成功案例</span></div>
@@ -170,45 +165,45 @@
         </div>
     </section>
 
-    <!-- 案例展示 - 自动横向滚动，无文字，无滚动条 -->
+    <!-- 案例展示 - 自动横向滚动，方向交替 -->
     <section id="projects" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">案例展示</h2>
             
-            <!-- 企业展厅 -->
-            <div class="mb-16 scroll-wrapper" data-scroll="hall">
+            <!-- 企业展厅 - 向左滚动 -->
+            <div class="mb-16 scroll-wrapper" data-direction="left">
                 <div class="section-title"><i class="fa-solid fa-building"></i> 企业展厅案例</div>
                 <div class="scroll-container" id="scroll-hall">
                     <div class="scroll-list" id="list-hall"></div>
                 </div>
             </div>
             
-            <!-- 展台搭建 -->
-            <div class="mb-16 scroll-wrapper" data-scroll="booth">
+            <!-- 展台搭建 - 向右滚动 -->
+            <div class="mb-16 scroll-wrapper" data-direction="right">
                 <div class="section-title"><i class="fa-solid fa-store"></i> 展台搭建案例</div>
                 <div class="scroll-container" id="scroll-booth">
                     <div class="scroll-list" id="list-booth"></div>
                 </div>
             </div>
             
-            <!-- 精工模型 -->
-            <div class="mb-16 scroll-wrapper" data-scroll="model">
+            <!-- 精工模型 - 向左滚动 -->
+            <div class="mb-16 scroll-wrapper" data-direction="left">
                 <div class="section-title"><i class="fa-solid fa-cube"></i> 精工模型案例</div>
                 <div class="scroll-container" id="scroll-model">
                     <div class="scroll-list" id="list-model"></div>
                 </div>
             </div>
             
-            <!-- 展墙设计 -->
-            <div class="mb-16 scroll-wrapper" data-scroll="wall">
+            <!-- 展墙设计 - 向右滚动 -->
+            <div class="mb-16 scroll-wrapper" data-direction="right">
                 <div class="section-title"><i class="fa-solid fa-paintbrush"></i> 展墙设计案例</div>
                 <div class="scroll-container" id="scroll-wall">
                     <div class="scroll-list" id="list-wall"></div>
                 </div>
             </div>
             
-            <!-- 平面设计 -->
-            <div class="mb-16 scroll-wrapper" data-scroll="graphic">
+            <!-- 平面设计 - 向左滚动 -->
+            <div class="mb-16 scroll-wrapper" data-direction="left">
                 <div class="section-title"><i class="fa-solid fa-palette"></i> 平面设计案例</div>
                 <div class="scroll-container" id="scroll-graphic">
                     <div class="scroll-list" id="list-graphic"></div>
@@ -281,29 +276,24 @@
         function generateImageUrls(count, startId) {
             const urls = [];
             for (let i = 1; i <= count; i++) {
-                // 使用不同的图片ID，确保多样性
                 const id = (startId + i * 13) % 300 + 1;
                 urls.push(`https://picsum.photos/id/${id}/400/300`);
             }
             return urls;
         }
         
-        // 渲染一个滚动列表（仅图片，无文字）
+        // 渲染一个滚动列表（仅图片）
         function renderList(containerId, imageUrls) {
             const container = document.getElementById(containerId);
             if (!container) return;
             let html = '';
             imageUrls.forEach(url => {
-                html += `
-                    <div class="case-card">
-                        <img src="${url}" alt="案例图片" class="case-img">
-                    </div>
-                `;
+                html += `<div class="case-card"><img src="${url}" alt="案例图片" class="case-img"></div>`;
             });
             container.innerHTML = html;
         }
         
-        // 初始化自动滚动 (无缝无限滚动)
+        // 初始化自动滚动，支持方向 left / right
         function initAutoScroll(wrapperSelector) {
             const wrappers = document.querySelectorAll(wrapperSelector);
             wrappers.forEach(wrapper => {
@@ -311,7 +301,8 @@
                 const scrollList = wrapper.querySelector('.scroll-list');
                 if (!scrollContainer || !scrollList) return;
                 
-                // 复制一份列表内容以实现无缝循环
+                const direction = wrapper.getAttribute('data-direction') || 'left'; // 默认向左
+                // 复制一份列表以实现无缝循环
                 const originalItems = Array.from(scrollList.children);
                 if (originalItems.length === 0) return;
                 originalItems.forEach(item => {
@@ -319,19 +310,33 @@
                     scrollList.appendChild(clone);
                 });
                 
-                let scrollSpeed = 1; // 像素每帧
+                let scrollSpeed = 1; // 每帧移动像素
                 let scrollInterval = null;
                 let isHovering = false;
                 
-                const step = () => {
+                // 根据方向定义滚动步进函数
+                const stepLeft = () => {
                     if (isHovering) return;
+                    // 向左滚动：增加 scrollLeft
                     if (scrollContainer.scrollLeft >= scrollList.scrollWidth / 2) {
-                        // 当滚动超过原始宽度一半时，瞬间重置到0，实现无缝
                         scrollContainer.scrollLeft = 0;
                     } else {
                         scrollContainer.scrollLeft += scrollSpeed;
                     }
                 };
+                
+                const stepRight = () => {
+                    if (isHovering) return;
+                    // 向右滚动：减少 scrollLeft，需要处理边界
+                    if (scrollContainer.scrollLeft <= 0) {
+                        // 跳转到右侧复制部分的起始位置（即原始宽度处）
+                        scrollContainer.scrollLeft = scrollList.scrollWidth / 2;
+                    } else {
+                        scrollContainer.scrollLeft -= scrollSpeed;
+                    }
+                };
+                
+                const step = (direction === 'left') ? stepLeft : stepRight;
                 
                 const startScroll = () => {
                     if (scrollInterval) clearInterval(scrollInterval);
@@ -356,9 +361,6 @@
                 });
                 
                 startScroll();
-                
-                // 可选：如果用户手动滚动，暂时停止自动？保留自动，但简单起见不做额外处理
-                // 为了更好的体验，当用户手动滚动时，暂时停止几秒？更复杂，暂时不做
             });
         }
         
@@ -375,7 +377,7 @@
         renderList('list-wall', wallImages);
         renderList('list-graphic', graphicImages);
         
-        // 等待DOM渲染完成后再初始化自动滚动
+        // 等待DOM渲染完成后初始化自动滚动
         setTimeout(() => {
             initAutoScroll('.scroll-wrapper');
         }, 100);
