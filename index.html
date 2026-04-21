@@ -11,67 +11,31 @@
         body { font-family: system-ui, -apple-system, "Noto Sans SC", sans-serif; }
         .hero-bg { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat; }
         
-        /* 横向滚动容器 - 隐藏滚动条 */
-        .scroll-container {
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            white-space: nowrap;
-            cursor: grab;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-            position: relative;
-        }
-        .scroll-container::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
-        }
-        
-        /* 内层列表 */
-        .scroll-list {
-            display: inline-flex;
-            gap: 1.5rem;
-            padding: 0.5rem 0;
-        }
-        
-        /* 案例卡片 - 无文字内容，只有图片 */
-        .case-card {
-            flex-shrink: 0;
-            width: 280px;
-            border-radius: 1rem;
-            overflow: visible;
-            position: relative;
-            transition: transform 0.2s;
-        }
+        /* 案例图片悬停放大效果 */
         .case-img {
             width: 100%;
-            height: 180px;
+            aspect-ratio: 4 / 3;
             object-fit: cover;
-            border-radius: 1rem;
+            border-radius: 0.75rem;
             transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            display: block;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
         }
-        .case-card:hover .case-img {
-            transform: scale(2.5);
-            z-index: 100;
-            position: relative;
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
-        }
-        
-        /* 保证悬停时图片不被裁切，且覆盖其他内容 */
-        .case-card {
+        .case-item {
             overflow: visible;
+            position: relative;
         }
-        
-        /* 业务标题样式 */
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .case-item:hover .case-img {
+            transform: scale(2);
+            z-index: 50;
+            position: relative;
+            box-shadow: 0 25px 30px -12px rgba(0,0,0,0.3);
         }
-        .section-title i {
-            color: #0ea5e9;
+        /* 保证图片放大后不被裁切，且浮于其他内容之上 */
+        .case-item {
+            overflow: visible !important;
+        }
+        .grid-container {
+            overflow: visible;
         }
     </style>
 </head>
@@ -165,48 +129,74 @@
         </div>
     </section>
 
-    <!-- 案例展示 - 自动横向滚动，方向交替 -->
+    <!-- 案例展示 - 每个主营业务 6 个静态图片，悬停放大 -->
     <section id="projects" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">案例展示</h2>
             
-            <!-- 企业展厅 - 向左滚动 -->
-            <div class="mb-16 scroll-wrapper" data-direction="left">
-                <div class="section-title"><i class="fa-solid fa-building"></i> 企业展厅案例</div>
-                <div class="scroll-container" id="scroll-hall">
-                    <div class="scroll-list" id="list-hall"></div>
+            <!-- 企业展厅案例 (6张) -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-building mr-3 text-sky-600"></i>企业展厅案例</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 grid-container">
+                    <!-- 6个图片 -->
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/1015/400/300" alt="展厅案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/1005/400/300" alt="展厅案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/104/400/300" alt="展厅案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/106/400/300" alt="展厅案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/108/400/300" alt="展厅案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/110/400/300" alt="展厅案例"></div>
                 </div>
             </div>
             
-            <!-- 展台搭建 - 向右滚动 -->
-            <div class="mb-16 scroll-wrapper" data-direction="right">
-                <div class="section-title"><i class="fa-solid fa-store"></i> 展台搭建案例</div>
-                <div class="scroll-container" id="scroll-booth">
-                    <div class="scroll-list" id="list-booth"></div>
+            <!-- 展台搭建案例 (6张) -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-store mr-3 text-sky-600"></i>展台搭建案例</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/133/400/300" alt="展台案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/102/400/300" alt="展台案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/116/400/300" alt="展台案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/119/400/300" alt="展台案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/120/400/300" alt="展台案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/122/400/300" alt="展台案例"></div>
                 </div>
             </div>
             
-            <!-- 精工模型 - 向左滚动 -->
-            <div class="mb-16 scroll-wrapper" data-direction="left">
-                <div class="section-title"><i class="fa-solid fa-cube"></i> 精工模型案例</div>
-                <div class="scroll-container" id="scroll-model">
-                    <div class="scroll-list" id="list-model"></div>
+            <!-- 精工模型案例 (6张) -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-cube mr-3 text-sky-600"></i>精工模型案例</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/201/400/300" alt="模型案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/202/400/300" alt="模型案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/203/400/300" alt="模型案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/204/400/300" alt="模型案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/205/400/300" alt="模型案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/206/400/300" alt="模型案例"></div>
                 </div>
             </div>
             
-            <!-- 展墙设计 - 向右滚动 -->
-            <div class="mb-16 scroll-wrapper" data-direction="right">
-                <div class="section-title"><i class="fa-solid fa-paintbrush"></i> 展墙设计案例</div>
-                <div class="scroll-container" id="scroll-wall">
-                    <div class="scroll-list" id="list-wall"></div>
+            <!-- 展墙设计案例 (6张) -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-paintbrush mr-3 text-sky-600"></i>展墙设计案例</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/251/400/300" alt="展墙案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/252/400/300" alt="展墙案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/253/400/300" alt="展墙案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/254/400/300" alt="展墙案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/255/400/300" alt="展墙案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/256/400/300" alt="展墙案例"></div>
                 </div>
             </div>
             
-            <!-- 平面设计 - 向左滚动 -->
-            <div class="mb-16 scroll-wrapper" data-direction="left">
-                <div class="section-title"><i class="fa-solid fa-palette"></i> 平面设计案例</div>
-                <div class="scroll-container" id="scroll-graphic">
-                    <div class="scroll-list" id="list-graphic"></div>
+            <!-- 平面设计案例 (6张) -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-palette mr-3 text-sky-600"></i>平面设计案例</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/29/400/300" alt="平面设计案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/30/400/300" alt="平面设计案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/31/400/300" alt="平面设计案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/32/400/300" alt="平面设计案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/33/400/300" alt="平面设计案例"></div>
+                    <div class="case-item"><img class="case-img" src="https://picsum.photos/id/34/400/300" alt="平面设计案例"></div>
                 </div>
             </div>
         </div>
@@ -272,117 +262,7 @@
     </footer>
 
     <script>
-        // 生成12张不同图片（无文字）
-        function generateImageUrls(count, startId) {
-            const urls = [];
-            for (let i = 1; i <= count; i++) {
-                const id = (startId + i * 13) % 300 + 1;
-                urls.push(`https://picsum.photos/id/${id}/400/300`);
-            }
-            return urls;
-        }
-        
-        // 渲染一个滚动列表（仅图片）
-        function renderList(containerId, imageUrls) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            let html = '';
-            imageUrls.forEach(url => {
-                html += `<div class="case-card"><img src="${url}" alt="案例图片" class="case-img"></div>`;
-            });
-            container.innerHTML = html;
-        }
-        
-        // 初始化自动滚动，支持方向 left / right
-        function initAutoScroll(wrapperSelector) {
-            const wrappers = document.querySelectorAll(wrapperSelector);
-            wrappers.forEach(wrapper => {
-                const scrollContainer = wrapper.querySelector('.scroll-container');
-                const scrollList = wrapper.querySelector('.scroll-list');
-                if (!scrollContainer || !scrollList) return;
-                
-                const direction = wrapper.getAttribute('data-direction') || 'left'; // 默认向左
-                // 复制一份列表以实现无缝循环
-                const originalItems = Array.from(scrollList.children);
-                if (originalItems.length === 0) return;
-                originalItems.forEach(item => {
-                    const clone = item.cloneNode(true);
-                    scrollList.appendChild(clone);
-                });
-                
-                let scrollSpeed = 1; // 每帧移动像素
-                let scrollInterval = null;
-                let isHovering = false;
-                
-                // 根据方向定义滚动步进函数
-                const stepLeft = () => {
-                    if (isHovering) return;
-                    // 向左滚动：增加 scrollLeft
-                    if (scrollContainer.scrollLeft >= scrollList.scrollWidth / 2) {
-                        scrollContainer.scrollLeft = 0;
-                    } else {
-                        scrollContainer.scrollLeft += scrollSpeed;
-                    }
-                };
-                
-                const stepRight = () => {
-                    if (isHovering) return;
-                    // 向右滚动：减少 scrollLeft，需要处理边界
-                    if (scrollContainer.scrollLeft <= 0) {
-                        // 跳转到右侧复制部分的起始位置（即原始宽度处）
-                        scrollContainer.scrollLeft = scrollList.scrollWidth / 2;
-                    } else {
-                        scrollContainer.scrollLeft -= scrollSpeed;
-                    }
-                };
-                
-                const step = (direction === 'left') ? stepLeft : stepRight;
-                
-                const startScroll = () => {
-                    if (scrollInterval) clearInterval(scrollInterval);
-                    scrollInterval = setInterval(step, 16); // 约60fps
-                };
-                
-                const stopScroll = () => {
-                    if (scrollInterval) {
-                        clearInterval(scrollInterval);
-                        scrollInterval = null;
-                    }
-                };
-                
-                // 鼠标悬停暂停
-                scrollContainer.addEventListener('mouseenter', () => {
-                    isHovering = true;
-                    stopScroll();
-                });
-                scrollContainer.addEventListener('mouseleave', () => {
-                    isHovering = false;
-                    startScroll();
-                });
-                
-                startScroll();
-            });
-        }
-        
-        // 生成5组各12张图片
-        const hallImages = generateImageUrls(12, 10);
-        const boothImages = generateImageUrls(12, 100);
-        const modelImages = generateImageUrls(12, 200);
-        const wallImages = generateImageUrls(12, 300);
-        const graphicImages = generateImageUrls(12, 400);
-        
-        renderList('list-hall', hallImages);
-        renderList('list-booth', boothImages);
-        renderList('list-model', modelImages);
-        renderList('list-wall', wallImages);
-        renderList('list-graphic', graphicImages);
-        
-        // 等待DOM渲染完成后初始化自动滚动
-        setTimeout(() => {
-            initAutoScroll('.scroll-wrapper');
-        }, 100);
-        
-        // 手机菜单函数
+        // 手机菜单切换
         function toggleMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');
