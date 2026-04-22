@@ -24,7 +24,7 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4));
-            z-index: 1; /* 确保遮罩在视频上方，文字下方 */
+            z-index: 1;
         }
 
         .hero-bg video {
@@ -34,10 +34,9 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: 0; /* 视频在最底层 */
+            z-index: 0;
         }
         
-        /* 文字内容需要在遮罩层之上 */
         .hero-content {
             position: relative;
             z-index: 2;
@@ -95,16 +94,14 @@
 
     <!-- Hero 区域 - 横屏视频背景 -->
     <header class="hero-bg h-screen flex items-center justify-center text-white">
-        <!-- 视频背景 - 使用你提供的 GitHub Release 视频直链 -->
-        <!-- 请务必将下面的 "480视频.mp4" 替换为你上传的视频文件的实际文件名（包括扩展名） -->
         <video autoplay loop muted playsinline>
             <source src="https://github.com/kevingu1023xx-hub/M-cloud-website/releases/download/v1.0/480.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         
-        <!-- 页面内容 -->
         <div class="hero-content text-center max-w-7xl mx-auto px-6">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6">深耕与执着<br>让您的品牌闪耀全场</h1>
+            <!-- 修改点：增加了 leading-tight → leading-relaxed，行间距从紧凑改为宽松 -->
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-relaxed">深耕与执着<br>让您的品牌闪耀全场</h1>
             <p class="text-2xl mb-10">企业展厅 · 展台搭建 · 精工模型 · 展墙设计 · 平面设计</p>
             <a href="#contact" class="inline-block bg-sky-600 hover:bg-sky-700 px-10 py-4 rounded-full text-xl font-medium transition">立即咨询合作</a>
         </div>
@@ -170,7 +167,6 @@
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">案例展示</h2>
             
-            <!-- 企业展厅案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-building mr-3 text-sky-600"></i>企业展厅案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 grid-container">
@@ -183,7 +179,6 @@
                 </div>
             </div>
             
-            <!-- 展台搭建案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-store mr-3 text-sky-600"></i>展台搭建案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -196,7 +191,6 @@
                 </div>
             </div>
             
-            <!-- 精工模型案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-cube mr-3 text-sky-600"></i>精工模型案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -209,7 +203,6 @@
                 </div>
             </div>
             
-            <!-- 展墙设计案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-paintbrush mr-3 text-sky-600"></i>展墙设计案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -222,7 +215,6 @@
                 </div>
             </div>
             
-            <!-- 平面设计案例 (6张) -->
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center"><i class="fa-solid fa-palette mr-3 text-sky-600"></i>平面设计案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
