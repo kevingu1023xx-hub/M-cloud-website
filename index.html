@@ -9,9 +9,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { font-family: system-ui, -apple-system, "Noto Sans SC", sans-serif; }
-        .hero-bg { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat; }
-        
-        /* 案例图片悬停放大效果 */
+
+        /* 视频背景 (小改动，将图片背景替换为视频背景） */
+        .hero-bg {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .hero-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4));
+            z-index: 0;
+        }
+
+        .hero-bg video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* 案例图片悬停放大效果（保持不变） */
         .case-img {
             width: 100%;
             aspect-ratio: 4 / 3;
@@ -37,7 +63,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- 导航栏：左上角为公司名称文字 -->
+    <!-- 导航栏 -->
     <nav class="bg-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-sky-600">麦云文化传播</div>
@@ -61,9 +87,16 @@
         </div>
     </nav>
 
-    <!-- Hero 区域 -->
-    <header class="hero-bg h-screen flex items-center text-white">
-        <div class="max-w-7xl mx-auto px-6 text-center">
+    <!-- Hero 区域 - 横屏视频背景 -->
+    <header class="hero-bg h-screen flex items-center justify-center text-white">
+        <!-- 视频背景 -->
+        <video autoplay loop muted playsinline class="w-full h-full object-cover">
+            <source src="https://github.com/你的用户名/你的项目名/blob/你的分支名/480视频.mp4?raw=true" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <!-- 页面内容 -->
+        <div class="relative z-10 text-center max-w-7xl mx-auto px-6">
             <h1 class="text-5xl md:text-6xl font-bold mb-6">深耕与执着<br>让您的品牌闪耀全场</h1>
             <p class="text-2xl mb-10">企业展厅 · 展台搭建 · 精工模型 · 展墙设计 · 平面设计</p>
             <a href="#contact" class="inline-block bg-sky-600 hover:bg-sky-700 px-10 py-4 rounded-full text-xl font-medium transition">立即咨询合作</a>
@@ -125,7 +158,7 @@
         </div>
     </section>
 
-    <!-- 案例展示 - 每个主营业务 6 个静态图片，悬停放大 -->
+    <!-- 案例展示 -->
     <section id="projects" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">案例展示</h2>
