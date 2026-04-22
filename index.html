@@ -42,18 +42,39 @@
             z-index: 2;
         }
 
+        /* 过渡区域样式 */
+        .transition-section {
+            background: linear-gradient(to bottom, #ffffff, #f8fafc);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .transition-line {
+            width: 60px;
+            height: 2px;
+            background: #0ea5e9;
+            margin: 0 auto 1rem auto;
+        }
+        .transition-icon {
+            color: #0ea5e9;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
         /* 关于我们 - 全宽背景区 */
         .about-full {
             position: relative;
-            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop') center/cover no-repeat;
-            background-attachment: fixed; /* 视差效果，可选 */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop') center/cover no-repeat;
+            background-attachment: fixed;
             min-height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         
-        /* 备用/移动端优化 */
         @media (max-width: 768px) {
             .about-full {
                 background-attachment: scroll;
@@ -84,7 +105,6 @@
             overflow: visible;
         }
         
-        /* 统计数字样式 */
         .stat-number {
             font-size: 3rem;
             font-weight: 700;
@@ -139,16 +159,30 @@
         </div>
     </header>
 
-    <!-- 关于我们 - 全宽大画面，文字居中，白色/蓝色 -->
+    <!-- 过渡区域：小分隔线 + 向下箭头 -->
+    <div class="transition-section">
+        <div class="transition-line"></div>
+        <div class="transition-icon">
+            <i class="fa-solid fa-arrow-down"></i>
+        </div>
+    </div>
+
+    <!-- 关于我们 - 全宽大画面，文字居中，按指定换行 -->
     <section id="about" class="about-full text-white">
         <div class="max-w-5xl mx-auto px-6 text-center">
             <h2 class="text-4xl md:text-5xl font-bold mb-8">关于我们</h2>
-            <p class="text-xl md:text-2xl leading-relaxed mb-10 max-w-3xl mx-auto">
-                麦云文化传播专注于企业展厅、展台、精工模型、展墙及平面设计的创意与制作。<br><br>
-                <span class="text-sky-300 font-semibold">二十年行业经验</span>，服务过多家知名品牌，为您提供从方案设计到落地制作的一站式服务。
-            </p>
+            <div class="text-xl md:text-2xl leading-relaxed mb-10 max-w-3xl mx-auto space-y-6">
+                <p>
+                    麦云文化传播专注于企业展厅、展台、精工模型、<br>
+                    展墙及平面设计的创意与制作。
+                </p>
+                <p>
+                    <span class="text-sky-300 font-semibold">二十年行业经验</span>，服务过多家知名品牌，为您提供<br>
+                    从方案设计到落地制作的一站式服务。
+                </p>
+            </div>
             
-            <!-- 统计数字，居中显示 -->
+            <!-- 统计数字 -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-3xl mx-auto">
                 <div>
                     <div class="stat-number">200+</div>
