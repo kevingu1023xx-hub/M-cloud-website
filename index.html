@@ -23,7 +23,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4));
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5));
             z-index: 1;
         }
 
@@ -40,6 +40,25 @@
         .hero-content {
             position: relative;
             z-index: 2;
+        }
+
+        /* 关于我们 - 全宽背景区 */
+        .about-full {
+            position: relative;
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop') center/cover no-repeat;
+            background-attachment: fixed; /* 视差效果，可选 */
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 备用/移动端优化 */
+        @media (max-width: 768px) {
+            .about-full {
+                background-attachment: scroll;
+                min-height: 70vh;
+            }
         }
 
         /* 案例图片悬停放大效果 */
@@ -63,6 +82,17 @@
         }
         .grid-container {
             overflow: visible;
+        }
+        
+        /* 统计数字样式 */
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0ea5e9;
+        }
+        .stat-label {
+            font-size: 1rem;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -99,34 +129,39 @@
             Your browser does not support the video tag.
         </video>
         
-        <div class="hero-content text-center max-w-7xl mx-auto px-6">
-            <!-- 修改：两行之间的间距从 mt-4 加大到 mt-8 -->
-            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+        <div class="hero-content text-center max-w-4xl mx-auto px-6">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
                 <div>深耕与执着</div>
-                <div class="mt-8 md:mt-10">让您的品牌闪耀全场</div>
+                <div class="mt-6 md:mt-8">让您的品牌闪耀全场</div>
             </h1>
-            <p class="text-2xl mb-10">企业展厅 · 展台搭建 · 精工模型 · 展墙设计 · 平面设计</p>
-            <a href="#contact" class="inline-block bg-sky-600 hover:bg-sky-700 px-10 py-4 rounded-full text-xl font-medium transition">立即咨询合作</a>
+            <p class="text-xl md:text-2xl mb-10 opacity-90">企业展厅 · 展台搭建 · 精工模型 · 展墙设计 · 平面设计</p>
+            <a href="#contact" class="inline-block bg-sky-600 hover:bg-sky-700 px-10 py-4 rounded-full text-xl font-medium transition shadow-lg">立即咨询合作</a>
         </div>
     </header>
 
-    <!-- 关于我们 -->
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12">关于我们</h2>
-            <div class="grid md:grid-cols-2 gap-12 items-center">
+    <!-- 关于我们 - 全宽大画面，文字居中，白色/蓝色 -->
+    <section id="about" class="about-full text-white">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8">关于我们</h2>
+            <p class="text-xl md:text-2xl leading-relaxed mb-10 max-w-3xl mx-auto">
+                麦云文化传播专注于企业展厅、展台、精工模型、展墙及平面设计的创意与制作。<br><br>
+                <span class="text-sky-300 font-semibold">二十年行业经验</span>，服务过多家知名品牌，为您提供从方案设计到落地制作的一站式服务。
+            </p>
+            
+            <!-- 统计数字，居中显示 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-3xl mx-auto">
                 <div>
-                    <p class="text-xl leading-relaxed text-slate-600">
-                        麦云文化传播专注于企业展厅、展台、精工模型、展墙及平面设计的创意与制作。<br><br>
-                        <span class="font-semibold text-sky-600">二十年行业经验</span>，服务过多家知名品牌，为您提供从方案设计到落地制作的一站式服务。
-                    </p>
-                    <div class="mt-10 grid grid-cols-3 gap-4 text-center">
-                        <div><span class="block text-4xl font-bold text-sky-600">200+</span><span class="text-slate-500">成功案例</span></div>
-                        <div><span class="block text-4xl font-bold text-sky-600">30+</span><span class="text-slate-500">合作品牌</span></div>
-                        <div><span class="block text-4xl font-bold text-sky-600">100%</span><span class="text-slate-500">形象升级</span></div>
-                    </div>
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label text-white/80">成功案例</div>
                 </div>
-                <img src="https://picsum.photos/id/1016/800/600" alt="公司展示" class="rounded-3xl shadow-2xl">
+                <div>
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label text-white/80">合作品牌</div>
+                </div>
+                <div>
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label text-white/80">形象升级</div>
+                </div>
             </div>
         </div>
     </section>
