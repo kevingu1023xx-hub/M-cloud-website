@@ -171,12 +171,6 @@
             color: #a0a0a0;
         }
         
-        .client-box {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            border: 1px solid #2a2a2a;
-        }
-        
         .contact-box {
             background-color: #1a1a1a;
         }
@@ -188,6 +182,15 @@
         .footer {
             background-color: #050505;
             border-top: 1px solid #1a1a1a;
+        }
+        
+        /* 二维码样式 */
+        .qrcode-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 0.75rem;
+            margin-top: 0.5rem;
+            border: 2px solid #0ea5e9;
         }
     </style>
 </head>
@@ -201,7 +204,6 @@
                 <a href="#about" class="hover:text-sky-500 transition text-white/80">关于我们</a>
                 <a href="#services" class="hover:text-sky-500 transition text-white/80">主营业务</a>
                 <a href="#projects" class="hover:text-sky-500 transition text-white/80">案例展示</a>
-                <a href="#clients" class="hover:text-sky-500 transition text-white/80">合作客户</a>
                 <a href="#contact" class="hover:text-sky-500 transition text-white/80">联系我们</a>
             </div>
             <button onclick="toggleMenu()" class="md:hidden text-3xl text-white">
@@ -212,7 +214,6 @@
             <a href="#about" class="block py-3 text-lg text-white/80" onclick="closeMenu()">关于我们</a>
             <a href="#services" class="block py-3 text-lg text-white/80" onclick="closeMenu()">主营业务</a>
             <a href="#projects" class="block py-3 text-lg text-white/80" onclick="closeMenu()">案例展示</a>
-            <a href="#clients" class="block py-3 text-lg text-white/80" onclick="closeMenu()">合作客户</a>
             <a href="#contact" class="block py-3 text-lg text-white/80" onclick="closeMenu()">联系我们</a>
         </div>
     </nav>
@@ -344,7 +345,6 @@
             <div class="mb-16">
                 <h3 class="text-2xl font-semibold mb-6 flex items-center text-white"><i class="fa-solid fa-building mr-3 text-sky-500"></i>企业展厅案例</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 grid-container">
-                    <!-- 5个图片，请替换为你的真实图片链接 -->
                     <div class="case-item"><img class="case-img" src="https://raw.githubusercontent.com/kevingu1023xx-hub/M-cloud-website/main/images/hall/01.jpg" alt="展厅案例"></div>
                     <div class="case-item"><img class="case-img" src="https://raw.githubusercontent.com/kevingu1023xx-hub/M-cloud-website/main/images/hall/02.jpg" alt="展厅案例"></div>
                     <div class="case-item"><img class="case-img" src="https://raw.githubusercontent.com/kevingu1023xx-hub/M-cloud-website/main/images/hall/03.jpg" alt="展厅案例"></div>
@@ -403,22 +403,7 @@
         </div>
     </section>
 
-    <!-- 合作客户（深色） -->
-    <section id="clients" class="py-20 dark-section">
-        <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 text-white">合作客户</h2>
-            <div class="grid grid-cols-3 md:grid-cols-6 gap-8">
-                <div class="client-box h-24 rounded-2xl flex items-center justify-center text-2xl font-medium shadow">客户 1</div>
-                <div class="client-box h-24 rounded-2xl flex items-center justify-center text-2xl font-medium shadow">客户 2</div>
-                <div class="client-box h-24 rounded-2xl flex items-center justify-center text-2xl font-medium shadow">客户 3</div>
-                <div class="client-box h-24 rounded-2xl flex items-center justify-center text-2xl font-medium shadow">客户 4</div>
-                <div class="client-box h-24 rounded-2xl flex items-center justify-center text-2xl font-medium shadow">客户 5</div>
-                <div class="client-box h-24 rounded-2xl flex items-center justify-center text-2xl font-medium shadow">客户 6</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 联系我们（深色） -->
+    <!-- 联系我们（深色）- 微信改为二维码 -->
     <section id="contact" class="py-20 dark-section">
         <div class="max-w-7xl mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12 text-white">联系我们</h2>
@@ -437,8 +422,10 @@
                         <div class="flex items-center text-xl">
                             <i class="fa-brands fa-weixin mr-6 text-3xl text-sky-500"></i>
                             <div>
-                                <span class="font-medium text-white">微信：</span> <span class="text-white/70">moyun_wenhua</span><br>
-                                <span class="text-sm text-white/50 mt-2 block">添加微信，获取最新案例资料</span>
+                                <span class="font-medium text-white">微信扫码联系</span><br>
+                                <!-- 二维码图片 - 请将你的二维码图片上传后替换下方链接 -->
+                                <img class="qrcode-img" src="https://raw.githubusercontent.com/kevingu1023xx-hub/M-cloud-website/main/images/wechat-qrcode.jpg" alt="微信二维码">
+                                <span class="text-sm text-white/50 mt-2 block">扫一扫添加微信</span>
                             </div>
                         </div>
                     </div>
