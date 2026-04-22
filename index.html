@@ -42,27 +42,53 @@
             z-index: 2;
         }
 
-        /* 过渡区域样式 */
-        .transition-section {
-            background: linear-gradient(to bottom, #ffffff, #f8fafc);
-            padding: 2rem 0;
-            text-align: center;
+        /* 设计感过渡区域 - 黑色背景 + 手绘草图线条 */
+        .design-transition {
+            background: #0a0a0a;
+            padding: 3rem 0;
+            position: relative;
+            overflow: hidden;
         }
-        .transition-line {
-            width: 60px;
-            height: 2px;
-            background: #0ea5e9;
-            margin: 0 auto 1rem auto;
+        
+        /* 草图线条容器 */
+        .sketch-container {
+            position: relative;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
-        .transition-icon {
-            color: #0ea5e9;
-            font-size: 1.5rem;
-            animation: bounce 2s infinite;
+        
+        /* 手绘风格线条 - 使用 SVG */
+        .sketch-line {
+            display: inline-block;
+            opacity: 0.7;
         }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(8px); }
+        
+        .sketch-line svg {
+            height: 40px;
+            width: auto;
         }
+        
+        /* 让线条有轻微的手绘抖动感 */
+        @keyframes subtleSketch {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(1px, -0.5px) rotate(0.3deg); }
+            50% { transform: translate(0, 0) rotate(0deg); }
+            75% { transform: translate(-0.5px, 1px) rotate(-0.2deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        
+        .sketch-line {
+            animation: subtleSketch 4s ease-in-out infinite;
+        }
+        
+        .sketch-line:nth-child(2) { animation-delay: 0.5s; }
+        .sketch-line:nth-child(3) { animation-delay: 1s; }
+        .sketch-line:nth-child(4) { animation-delay: 1.5s; }
+        .sketch-line:nth-child(5) { animation-delay: 2s; }
 
         /* 关于我们 - 全宽背景区 */
         .about-full {
@@ -79,6 +105,12 @@
             .about-full {
                 background-attachment: scroll;
                 min-height: 70vh;
+            }
+            .sketch-container {
+                gap: 1rem;
+            }
+            .sketch-line svg {
+                height: 25px;
             }
         }
 
@@ -159,11 +191,43 @@
         </div>
     </header>
 
-    <!-- 过渡区域：小分隔线 + 向下箭头 -->
-    <div class="transition-section">
-        <div class="transition-line"></div>
-        <div class="transition-icon">
-            <i class="fa-solid fa-arrow-down"></i>
+    <!-- 设计感过渡区域：黑色背景 + 手绘草图线条 -->
+    <div class="design-transition">
+        <div class="sketch-container">
+            <!-- 手绘波浪线 -->
+            <div class="sketch-line">
+                <svg viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 15 C15 5, 25 25, 35 15 C45 5, 55 25, 65 15 C75 5, 85 25, 98 15" stroke="#0ea5e9" stroke-width="1.5" stroke-linecap="round" fill="none" stroke-dasharray="2 3"/>
+                </svg>
+            </div>
+            <!-- 手绘直线 + 小圆 -->
+            <div class="sketch-line">
+                <svg viewBox="0 0 80 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="5" y1="15" x2="55" y2="15" stroke="#0ea5e9" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 4"/>
+                    <circle cx="65" cy="15" r="3" stroke="#0ea5e9" stroke-width="1" fill="none"/>
+                </svg>
+            </div>
+            <!-- 手绘折线 -->
+            <div class="sketch-line">
+                <svg viewBox="0 0 90 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="5,20 25,8 45,20 65,8 85,20" stroke="#0ea5e9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-dasharray="2 2"/>
+                </svg>
+            </div>
+            <!-- 手绘交叉线 + 点 -->
+            <div class="sketch-line">
+                <svg viewBox="0 0 80 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="5" y1="5" x2="35" y2="25" stroke="#0ea5e9" stroke-width="1.2" stroke-linecap="round"/>
+                    <line x1="35" y1="5" x2="5" y2="25" stroke="#0ea5e9" stroke-width="1.2" stroke-linecap="round"/>
+                    <circle cx="55" cy="15" r="2.5" stroke="#0ea5e9" stroke-width="1" fill="none"/>
+                    <circle cx="68" cy="15" r="1.5" stroke="#0ea5e9" stroke-width="1" fill="none"/>
+                </svg>
+            </div>
+            <!-- 手绘弧线 -->
+            <div class="sketch-line">
+                <svg viewBox="0 0 70 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 20 C15 5, 35 5, 45 20 C55 35, 65 5, 70 10" stroke="#0ea5e9" stroke-width="1.3" stroke-linecap="round" fill="none" stroke-dasharray="1 3"/>
+                </svg>
+            </div>
         </div>
     </div>
 
